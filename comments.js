@@ -1,26 +1,18 @@
-// create web server
-// const express = require('express');
-// const app = express();
+// Create web server without libraries
+// Run with: node comments.js
 
-// // get body-parser
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+// Load modules
+const http = require('http');
+const fs = require('fs');
 
-// // get comments
-// const comments = require('./comments')
-// app.get('/comments', (req, res) => {
-//   res.json(comments.getComments());
-// });
+// Create server
+http.createServer((req, res) => {
+    // Read file
+    fs.readFile('index.html', (err, data) => {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(data);
+        res.end();
+    });
+}).listen(8080);
 
-// // post comments
-// app.post('/comments', (req, res) => {
-//   const {name, comment} = req.body;
-//   comments.addComment(name, comment);
-//   res.json(comments.getComments());
-// });
-
-// // listen port 3000
-// app.listen(3000, () => {
-//   console.log('Server is running on http://localhost:3000');
-// });
+console.log('Server running at http://localhost:8080/');
